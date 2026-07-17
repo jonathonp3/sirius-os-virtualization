@@ -8,41 +8,77 @@ With these changes, virtnetworkd.service starts cleanly and runs dnsmasq, so lib
 
 This project is built and hosted via [Fedora COPR](https://copr.fedorainfracloud.org/coprs/jonathonp3/sirius-os/). 
 
-
 📦 Installation
 
-1. On an Existing System (Sirius-OS, Silverblue, Bazzite)
+1. On an existing system (Sirius-OS, Silverblue, Bazzite)
 
-If you are using a standard atomic desktop, add the repository manually and then layer the package:
-bash
+Add the COPR repository, then layer the package:
 
-Add the Copr Repository
 ```bash
 sudo curl -Lo /etc/yum.repos.d/_copr_jonathonp3-sirius-os.repo https://copr.fedorainfracloud.org/coprs/jonathonp3/sirius-os/repo/fedora-44/jonathonp3-sirius-os-fedora-44.repo
 ```
-Install the Sirius-OS Virtualization Stack
+
+## Option A: Virtualization Stack (requires user action after install)
+
 ```bash
-rpm-ostree install sirius-os-virtualization
+rpm-ostree install sirius-os-virtualization-user-enable
 ```
+
 Reboot to apply changes
 ```bash
 systemctl reboot
 ```
 
-Via BlueBuild / Custom Image (Bazzite, Aurora, etc.)
+After reboot, enable and start the services/socket:
+```bash
+sudo systemctl enable --now virtqemud.service
+sudo systemctl enable --now virtlogd.service
+sudo systemctl enable --now virtnetworkd.service
+sudo systemctl enable --now virtstoraged.service
+sudo systemctl enable --now virtnodedevd.socket
+```
 
-If you are building your own image via BlueBuild, add the repository to your recipe.yml or your config directory:
+## Option B: Virtualization Stack (auto via vendor-layer symlinks)
+
+This package uses hard-coded vendor-layer systemd symlinks and declared systemd dependencies to ensure the required services start on boot.
+
+Note: `systemctl is-enabled virtqemud.service virtlogd.service virtstoraged.service virtnetworkd.service virtnodedevd.socket` will not report enabled because the enablement is implemented in the vendor layer rather than via symlinks under /etc.
+
+Install:
+```bash
+rpm-ostree install sirius-os-virtualization-vendor-symlinks
+```
+
+Reboot to apply changes:
+```bash
+systemctl reboot
+```
+
+
+## Via BlueBuild / Custom Image (Bazzite, Aurora, etc.)
+
+If you’re building your own image with BlueBuild, add the COPR repository in your recipe.yml or in your config directory, then add the package(s) you want in the packages section.
 
 Repository URL:
 ```bash
 https://copr.fedorainfracloud.org/coprs/jonathonp3/sirius-os/repo/fedora-44/jonathonp3-sirius-os-fedora-44.repo
 ```
-Under the packages section in recipe.yml:
+
+Option A: User-enable after install
 yaml
 ```bash
   - type: rpm-ostree
     install:
-      - sirius-os-virtualization
+      - sirius-os-virtualization-user-enable
 ```
 
+Option B: Auto via vendor-layer symlinks
 
+
+```bash
+  - type: rpm-ostree
+    install:
+      - sirius-os-virtualization-user-enable
+```
+
+Choose Option A if you prefer enabling services manually during the build or after the image is deployed , or Option B if you want them started on boot via vendor-layer systemd enablement.
