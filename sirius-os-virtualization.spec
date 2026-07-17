@@ -47,7 +47,7 @@ install -p -m 644 %{_sourcedir}/sirius-os-virtualization.tmpfiles %{buildroot}/u
 /usr/lib/tmpfiles.d/sirius-os-virtualization.conf
 
 %changelog
-* Thu Jul 16 2026 Jonathon <jonathon@sirius-os> - 1.0.0-1
+* Fri Jul 17 2026 Jonathon <jonathon@sirius-os> - 1.0.0-1
 - First Stable Release for sirius-os-virtualization
 - Verified compatibility with modular libvirt architecture
 
