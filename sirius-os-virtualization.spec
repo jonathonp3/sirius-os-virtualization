@@ -3,7 +3,7 @@
 
 Name:           sirius-os-virtualization
 Version:        1.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        User-Enabled Virtualization Stack for Sirius-OS
 License:        GPLv3
 URL:            https://github.com/jonathonp3/sirius-os-virtualization
@@ -47,6 +47,9 @@ install -p -m 644 %{_sourcedir}/sirius-os-virtualization.tmpfiles %{buildroot}/u
 /usr/lib/tmpfiles.d/sirius-os-virtualization.conf
 
 %changelog
+* Sun Jul 19 2026 Jonathon <jonathon@sirius-os> - 1.0.0-2
+- fix: define kvm group to enable declarative user membership
+
 * Fri Jul 17 2026 Jonathon <jonathon@sirius-os> - 1.0.0-1
 - First Stable Release for sirius-os-virtualization
 - Verified compatibility with modular libvirt architecture
