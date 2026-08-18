@@ -1,0 +1,13 @@
+[Unit]
+Description=Sirius-OS libvirt provisioning
+After=local-fs.target
+ConditionPathExists=!/etc/sirius-os/libvirt-provisioned
+
+[Service]
+Type=oneshot
+User=root
+ExecStart=/usr/libexec/sirius-os-virtualization-libvirt-provisioning.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
