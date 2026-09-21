@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <short>Quick Share (HTTP)</short>
+  <description>Allows local file sharing and development traffic on port 8000.</description>
+  <port protocol="tcp" port="8000"/>
+</service>
