@@ -94,6 +94,23 @@ The uninstall provisioner will clean up all artifacts, including firewall rules,
 
 ---
 
+**If your VMs lost network access after removing my PIA App installer**
+
+If you have `sirius-os-virtualization` installed and you also had
+`sirius-os-pia-installer` installed at some point, removing PIA could
+break VM networking. The PIA uninstaller used to include a redundant
+`nft flush ruleset` step which has been removed in version sirius-os-pia-installer 2.0.0-4
+
+Restore it with:
+
+```bash
+sudo firewall-cmd --zone=libvirt --add-interface=virbr0
+sudo firewall-cmd --zone=libvirt --add-interface=virbr0 --permanent
+```
+
+---
+
+
 License: GPL-3.0-only
 
 This package is one implementation of the  [Sirius Provisioning Framework (SPF)](https://github.com/jonathonp3/sirius-provisioning-framework).
