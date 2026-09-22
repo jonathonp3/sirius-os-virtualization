@@ -119,8 +119,8 @@ SPF is a declarative, systemd-based framework for automating complex software li
 
 Other implementations:
 
-    [sirius-os-pia-installer](https://github.com/jonathonp3/sirius-os-pia-installer)
+- [sirius-os-pia-installer](https://github.com/jonathonp3/sirius-os-pia-installer)
+- [sirius-os-protonvpn](https://github.com/jonathonp3/sirius-os-protonvpn)
 
-    [sirius-os-protonvpn](https://github.com/jonathonp3/sirius-os-protonvpn)
 
 This project is built and hosted via [Fedora COPR](https://copr.fedorainfracloud.org/coprs/jonathonp3/sirius-os/). 
